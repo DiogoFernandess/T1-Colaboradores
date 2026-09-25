@@ -11,7 +11,7 @@ public class ColaboradoresService {
 
     ColaboradoresRepository colaboradoresRepository;
 
-    public List getAllColaboradores (){
+    public List<Colaboradores> getAllColaboradores (){
 
         return colaboradoresRepository.findAll();
     }
