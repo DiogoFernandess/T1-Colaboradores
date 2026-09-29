@@ -2,6 +2,7 @@ package colaboradores.requisitos.controller;
 
 import colaboradores.requisitos.entity.ColaboradorPagamento;
 import colaboradores.requisitos.entity.Comissao;
+import colaboradores.requisitos.entity.FolhaResumo;
 import colaboradores.requisitos.entity.Producao;
 import colaboradores.requisitos.service.PagamentoService;
 import io.swagger.v3.oas.annotations.security.OAuthFlow;
@@ -9,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,9 +30,15 @@ public class PagamentoController {
     }
 
     @GetMapping("/folha/{matricula}")
-    public ResponseEntity<ColaboradorPagamento> getFolhaByMatricula(){
+    public ResponseEntity<ColaboradorPagamento> getFolhaByMatricula(@PathVariable String matricula){
 
-        return ResponseEntity.ok()
+        return ResponseEntity.ok(pagamentoService.getFolhaByMatricula(matricula));
+    }
+
+    @GetMapping("/resumo")
+    public ResponseEntity<FolhaResumo> getFolhaResumo(){
+
+        return ResponseEntity.ok();
     }
 
     @PostMapping

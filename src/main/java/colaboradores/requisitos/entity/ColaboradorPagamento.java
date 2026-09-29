@@ -19,4 +19,6 @@ public class ColaboradorPagamento {
     private BigDecimal salario;
 
     private BigDecimal adicional;
+
+    private BigDecimal total;
 }
