@@ -1,6 +1,5 @@
 package colaboradores.requisitos.service;
 
-import colaboradores.requisitos.controller.ColaboradorController;
 import colaboradores.requisitos.entity.Colaborador;
 import colaboradores.requisitos.exception.ConflictException;
 import colaboradores.requisitos.exception.ResourceNotFoundException;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ColaboradoresService {
+public class ColaboradorService {
 
     @Autowired
     ColaboradoresRepository colaboradoresRepository;
