@@ -21,6 +21,6 @@ public class Colaborador {
     private BigDecimal salario;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo")
-    private TipoColaborador tipoColaborador;
+    @Column
+    private TipoColaborador tipo;
 }

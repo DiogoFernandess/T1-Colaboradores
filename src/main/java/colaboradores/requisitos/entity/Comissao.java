@@ -11,13 +11,16 @@ import java.math.BigDecimal;
 public class Comissao {
 
     @Id
-    @Column
-    private String id_colaborador;
+    @Column(name = "idMatricula")
+    private String idMatricula;
 
     @Column
-    private BigDecimal salario;
+    private BigDecimal valorVendas;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo")
-    private TipoColaborador tipoColaborador;
+    @Column
+    private double porcentagem;
+
+    @Column
+    private BigDecimal comissao;
+
 }
