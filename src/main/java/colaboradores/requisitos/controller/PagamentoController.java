@@ -2,6 +2,7 @@ package colaboradores.requisitos.controller;
 
 import colaboradores.requisitos.entity.ColaboradorPagamento;
 import colaboradores.requisitos.entity.Comissao;
+import colaboradores.requisitos.entity.Producao;
 import colaboradores.requisitos.service.PagamentoService;
 import io.swagger.v3.oas.annotations.security.OAuthFlow;
 import lombok.RequiredArgsConstructor;
@@ -43,5 +44,8 @@ public class PagamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<>
+    public ResponseEntity<Producao> postProducao (Producao producao){
+
+        return ResponseEntity.ok(pagamentoService.postProducao(producao));
+    }
 }
