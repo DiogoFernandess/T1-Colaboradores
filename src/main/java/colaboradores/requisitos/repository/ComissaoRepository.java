@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface ComissaoRepository extends JpaRepository<Comissao, String> {
 
-    @Query("SELECT COALESCE(SUM(c.valor), 0) FROM Comissao c")
+    @Query("SELECT SUM(c.comissao) FROM Comissao c")
     BigDecimal sumTotalComissoes();
 
-    @Query("SELECT COALESCE(SUM(c.valor), 0) FROM Comissao c WHERE c.colaborador.idMatricula = :idMatricula")
-    BigDecimal sumValorByColaboradorId(@Param("idMatricula") String matricula);
+    @Query("SELECT SUM(c.comissao) FROM Comissao c WHERE c.idMatricula = :idMatricula")
+    BigDecimal sumComissaoByMatricula(@Param("idMatricula") String idMatricula);
 }

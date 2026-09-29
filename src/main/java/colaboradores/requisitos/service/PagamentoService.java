@@ -5,7 +5,6 @@ import colaboradores.requisitos.exception.ConflictException;
 import colaboradores.requisitos.repository.ColaboradorRepository;
 import colaboradores.requisitos.repository.ComissaoRepository;
 import colaboradores.requisitos.repository.ProducaoRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +60,7 @@ public class PagamentoService {
 
         colaboradorService.matriculaNoExist(matricula);
 
-        return colaboradorRepository.findTipoColaborador(matricula);
+        return colaboradorRepository.findTipoColaboradorByMatricula(matricula);
     }
 
     public List<ColaboradorPagamento> folha (){
@@ -119,7 +118,7 @@ public class PagamentoService {
         return ColaboradorPagamento.builder()
                 .matricula(colaborador.getMatricula())
                 .nome(colaborador.getNome())
-                .tipoColaborador(colaborador.getTipoColaborador())
+                .tipoColaborador(colaborador.getTipo())
                 .salario(salario)
                 .adicional(adicional)
                 .total(total)
@@ -127,12 +126,12 @@ public class PagamentoService {
     }
 
     private BigDecimal calcularAdicional(Colaborador colaborador) {
-        if (colaborador.getTipoColaborador() == null) {
+        if (colaborador.getTipo() == null) {
             return BigDecimal.ZERO;
         }
 
-        BigDecimal adicional = switch (colaborador.getTipoColaborador()) {
-            case COMISSIONADO -> comissaoRepository.sumValorByColaboradorId(colaborador.getMatricula());
+        BigDecimal adicional = switch (colaborador.getTipo()) {
+            case COMISSIONADO -> comissaoRepository.sumComissaoByMatricula(colaborador.getMatricula());
             case PRODUCAO -> producaoRepository.sumValorByColaboradorId(colaborador.getMatricula());
             case PADRAO -> BigDecimal.ZERO;
         };

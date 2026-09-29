@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Data
 public class Comissao {
 
+    @Id
     @Column(name = "idMatricula")
     private String idMatricula;
 

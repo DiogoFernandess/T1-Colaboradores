@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface ProducaoRepository extends JpaRepository<Producao, String> {
 
-    @Query("SELECT COALESCE(SUM(p.valor), 0) FROM Producao p")
+    @Query("SELECT SUM(p.valorUnidade) FROM Producao p")
     BigDecimal sumTotalProducao();
 
-    @Query("SELECT COALESCE(SUM(p.valor), 0) FROM Producao p WHERE p.colaborador.idMatricula = :idMatricula")
+    @Query("SELECT SUM(p.valorUnidade) FROM Producao p WHERE p.idMatricula = :idMatricula")
     BigDecimal sumValorByColaboradorId(@Param("idMatricula") String idMatricula);
 }

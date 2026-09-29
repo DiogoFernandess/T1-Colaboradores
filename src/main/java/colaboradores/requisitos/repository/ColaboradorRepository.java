@@ -17,10 +17,10 @@ public interface ColaboradorRepository extends JpaRepository<Colaborador, String
 
     boolean existsByMatricula(String matricula);
 
-    TipoColaborador findTipoColaborador(String matricula);
+    TipoColaborador findTipoColaboradorByMatricula(String matricula);
 
     int countByTipo(TipoColaborador tipo);
 
-    @Query("SELECT COALESCE(SUM(c.salario), 0) FROM Colaborador c WHERE c.tipo = :tipo")
+    @Query("SELECT SUM(c.salario) FROM Colaborador c WHERE c.tipo = :tipo")
     BigDecimal sumSalarioByTipo(@Param("tipo") TipoColaborador tipo);
 }
