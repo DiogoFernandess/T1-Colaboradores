@@ -41,4 +41,7 @@ public class PagamentoController {
 
         return ResponseEntity.ok(pagamentoService.postComissao(comissao));
     }
+
+    @PostMapping
+    public ResponseEntity<>
 }
