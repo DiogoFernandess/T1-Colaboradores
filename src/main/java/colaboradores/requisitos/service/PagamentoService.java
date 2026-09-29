@@ -2,6 +2,9 @@ package colaboradores.requisitos.service;
 
 import colaboradores.requisitos.entity.Comissao;
 import colaboradores.requisitos.entity.Producao;
+import colaboradores.requisitos.entity.TipoColaborador;
+import colaboradores.requisitos.exception.ConflictException;
+import colaboradores.requisitos.repository.ColaboradorRepository;
 import colaboradores.requisitos.repository.ComissaoRepository;
 import colaboradores.requisitos.repository.ProducaoRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +21,40 @@ public class PagamentoService {
     @Autowired
     ProducaoRepository producaoRepository;
 
+    @Autowired
+    ColaboradorService colaboradorService;
+
+    @Autowired
+    ColaboradorRepository colaboradorRepository;
+
     public Comissao postComissao(Comissao comissao){
+
+        TipoColaborador tipo = tipoColaborador(comissao.getIdMatricula());
+
+        if (tipo != TipoColaborador.COMISSIONADO) {
+
+            throw new ConflictException("Colaborador não pertence a esta categoria");
+        }
 
         return comissaoRepository.save(comissao);
     }
 
     public Producao postProducao(Producao producao){
 
+        TipoColaborador tipo = tipoColaborador(producao.getIdMatricula());
+
+        if (tipo != TipoColaborador.PRODUCAO) {
+
+                throw new ConflictException("Colaborador não pertence a esta categoria");
+        }
+
         return producaoRepository.save(producao);
+    }
+
+    public TipoColaborador tipoColaborador(String matricula){
+
+        colaboradorService.matriculaNoExist(matricula);
+
+        return colaboradorRepository.findTipoColaborador(matricula);
     }
 }

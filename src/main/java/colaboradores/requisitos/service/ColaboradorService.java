@@ -48,6 +48,17 @@ public class ColaboradorService {
         }
     }
 
+    public void matriculaNoExist(String matricula){
+        try {
+            boolean exite = verifyMatriculaExist(matricula);
+            if (!exite){
+                throw new ConflictException("Email não cadastrado" + matricula);
+            }
+        } catch (ConflictException e){
+            throw new ConflictException("Email não cadastrado" + matricula);
+        }
+    }
+
 
     public boolean verifyMatriculaExist(String matricula){
         return colaboradoresRepository.existsByMatricula(matricula);
