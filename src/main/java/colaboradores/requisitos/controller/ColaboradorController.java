@@ -1,14 +1,14 @@
 package colaboradores.requisitos.controller;
 
-import colaboradores.requisitos.repository.ColaboradoresRepository;
-import colaboradores.requisitos.service.ColaboradoresService;
+import colaboradores.requisitos.entity.Colaborador;
+import colaboradores.requisitos.service.ColaboradorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RestController
@@ -17,11 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class ColaboradorController {
 
     @Autowired
-    ColaboradoresService colaboradoresService;
+    ColaboradorService colaboradorService;
 
     @GetMapping
-    public ResponseEntity getAllColaboradores(){
+    public ResponseEntity<List<Colaborador>> getAllColaboradores(){
 
-        return ResponseEntity.ok(colaboradoresService.getAllColaboradores());
+        return ResponseEntity.ok(colaboradorService.getAllColaboradores());
+    }
+
+    @GetMapping("/{matricula}")
+    public ResponseEntity<Colaborador> getColaboradorByMatricula(@PathVariable String matricula){
+
+        return ResponseEntity.ok(colaboradorService.findColaboradorByMatricula(matricula));
+    }
+
+    @PostMapping("/cadastro")
+    public ResponseEntity<Colaborador> cadastroColaborador (Colaborador colaborador){
+
+        return ResponseEntity.ok(colaboradorService.cadastroColaborador(colaborador));
     }
 }
