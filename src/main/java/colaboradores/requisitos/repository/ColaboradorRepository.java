@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ColaboradoresRepository extends JpaRepository<Colaborador, String> {
+public interface ColaboradorRepository extends JpaRepository<Colaborador, String> {
 
     Optional<Colaborador> findByMatricula (String matricula);
 

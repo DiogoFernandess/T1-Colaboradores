@@ -3,7 +3,7 @@ package colaboradores.requisitos.service;
 import colaboradores.requisitos.entity.Colaborador;
 import colaboradores.requisitos.exception.ConflictException;
 import colaboradores.requisitos.exception.ResourceNotFoundException;
-import colaboradores.requisitos.repository.ColaboradoresRepository;
+import colaboradores.requisitos.repository.ColaboradorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.List;
 public class ColaboradorService {
 
     @Autowired
-    ColaboradoresRepository colaboradoresRepository;
+    ColaboradorRepository colaboradoresRepository;
 
     public List<Colaborador> getAllColaboradores (){
 
