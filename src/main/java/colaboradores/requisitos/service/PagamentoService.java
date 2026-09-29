@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static colaboradores.requisitos.entity.TipoColaborador.*;
 
@@ -64,7 +66,10 @@ public class PagamentoService {
 
     public List<ColaboradorPagamento> folha (){
 
-        return
+        return colaboradorRepository.findAll()
+                .stream()
+                .map(this::montarFolhaPagamento) // Reutiliza a mesma função para todos
+                .collect(Collectors.toList());
     }
 
     public FolhaResumo folhaResumo(){
@@ -98,27 +103,16 @@ public class PagamentoService {
     public ColaboradorPagamento getFolhaByMatricula(String matricula){
 
         Colaborador colaborador = colaboradorRepository.findByMatricula(matricula)
-                .orElseThrow(() -> new EntityNotFoundException("Colaborador não encontrado com a matrícula: " + matricula));
+                .orElseThrow(() -> new RuntimeException("Colaborador não encontrado com a matrícula: " + matricula));
 
-        BigDecimal salario = colaborador.getSalario() != null
-                ? colaborador.getSalario()
-                : BigDecimal.ZERO;
+        return montarFolhaPagamento(colaborador);
+    }
 
-        BigDecimal adicional = BigDecimal.ZERO;
+    private ColaboradorPagamento montarFolhaPagamento(Colaborador colaborador) {
 
-        // 3. Verifica o Enum do colaborador para buscar os adicionais
-        if (colaborador.getTipoColaborador() != null) {
-            switch (colaborador.getTipoColaborador()) {
-                case COMISSIONADO ->
-                        adicional = comissaoRepository.sumValorByColaboradorId(colaborador.getMatricula());
-                case PRODUCAO ->
-                        adicional = producaoRepository.sumValorByColaboradorId(colaborador.getMatricula());
-                case PADRAO ->
-                        adicional = BigDecimal.ZERO;
-            }
-        }
+        BigDecimal salario = Objects.requireNonNullElse(colaborador.getSalario(), BigDecimal.ZERO);
 
-        adicional = adicional != null ? adicional : BigDecimal.ZERO;
+        BigDecimal adicional = calcularAdicional(colaborador);
 
         BigDecimal total = salario.add(adicional);
 
@@ -130,5 +124,19 @@ public class PagamentoService {
                 .adicional(adicional)
                 .total(total)
                 .build();
+    }
+
+    private BigDecimal calcularAdicional(Colaborador colaborador) {
+        if (colaborador.getTipoColaborador() == null) {
+            return BigDecimal.ZERO;
+        }
+
+        BigDecimal adicional = switch (colaborador.getTipoColaborador()) {
+            case COMISSIONADO -> comissaoRepository.sumValorByColaboradorId(colaborador.getMatricula());
+            case PRODUCAO -> producaoRepository.sumValorByColaboradorId(colaborador.getMatricula());
+            case PADRAO -> BigDecimal.ZERO;
+        };
+
+        return Objects.requireNonNullElse(adicional, BigDecimal.ZERO);
     }
 }

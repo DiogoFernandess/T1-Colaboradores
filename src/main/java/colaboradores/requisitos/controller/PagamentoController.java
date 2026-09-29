@@ -26,7 +26,7 @@ public class PagamentoController {
     @GetMapping("/folha")
     public ResponseEntity<List<ColaboradorPagamento>> getFolha (){
 
-        return ResponseEntity.ok()
+        return ResponseEntity.ok(pagamentoService.folha());
     }
 
     @GetMapping("/folha/{matricula}")
