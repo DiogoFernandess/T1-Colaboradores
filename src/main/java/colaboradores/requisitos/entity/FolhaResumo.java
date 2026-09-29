@@ -1,15 +1,17 @@
 package colaboradores.requisitos.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Getter
+@Setter
 public class FolhaResumo {
 
-    private int colaboradores;
+    private long colaboradores;
 
     private int colaboradoresComissionados;
 
@@ -17,11 +19,12 @@ public class FolhaResumo {
 
     private int colaboradoresPadrao;
 
-    private BigDecimal valorComissao;
+    private BigDecimal totalPagamentoComissao;
 
-    private BigDecimal valorProducao;
+    private BigDecimal totalPagamentoProducao;
 
-    private BigDecimal valorPadrao;
+    private BigDecimal totalPagamentoPadrao;
 
-    private BigDecimal valorTotal;
+    private BigDecimal pagamentoTotal;
+
 }

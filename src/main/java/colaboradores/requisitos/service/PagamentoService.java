@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -65,7 +66,31 @@ public class PagamentoService {
 
     public FolhaResumo folhaResumo(){
 
-        return
+        FolhaResumo resumo = new FolhaResumo();
+
+        resumo.setColaboradores(colaboradorRepository.count());
+        resumo.setColaboradoresPadrao(colaboradorRepository.countByTipo(TipoColaborador.PADRAO));
+        resumo.setColaboradoresComissionados(colaboradorRepository.countByTipo(TipoColaborador.COMISSIONADO));
+        resumo.setColaboradoresProducao(colaboradorRepository.countByTipo(TipoColaborador.PRODUCAO));
+
+        BigDecimal somaSalariosPadrao = colaboradorRepository.sumSalarioByTipo(TipoColaborador.PADRAO);
+        BigDecimal somaSalariosComissao = colaboradorRepository.sumSalarioByTipo(TipoColaborador.COMISSIONADO)
+                        .add(comissaoRepository.sumTotalComissoes());
+        BigDecimal somaSalariosProducao = colaboradorRepository.sumSalarioByTipo(TipoColaborador.PRODUCAO)
+                        .add(producaoRepository.sumTotalProducao());
+
+        resumo.setTotalPagamentoPadrao(somaSalariosPadrao);
+        resumo.setTotalPagamentoComissao(somaSalariosComissao);
+        resumo.setTotalPagamentoProducao(somaSalariosProducao);
+
+        // Soma total dos colaboradores (Soma das 3 modalidades)
+        BigDecimal totalGeralColaboradores = somaSalariosPadrao
+                .add(somaSalariosComissao)
+                .add(somaSalariosProducao);
+
+        resumo.setPagamentoTotal(totalGeralColaboradores);
+
+        return resumo;
     }
 
     public ColaboradorPagamento getFolhaByMatricula(String matricula){

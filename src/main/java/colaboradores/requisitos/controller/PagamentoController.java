@@ -38,7 +38,7 @@ public class PagamentoController {
     @GetMapping("/resumo")
     public ResponseEntity<FolhaResumo> getFolhaResumo(){
 
-        return ResponseEntity.ok();
+        return ResponseEntity.ok(pagamentoService.folhaResumo());
     }
 
     @PostMapping

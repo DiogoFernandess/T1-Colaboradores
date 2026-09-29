@@ -3,8 +3,11 @@ package colaboradores.requisitos.repository;
 import colaboradores.requisitos.entity.Colaborador;
 import colaboradores.requisitos.entity.TipoColaborador;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Repository
@@ -15,4 +18,9 @@ public interface ColaboradorRepository extends JpaRepository<Colaborador, String
     boolean existsByMatricula(String matricula);
 
     TipoColaborador findTipoColaborador(String matricula);
+
+    int countByTipo(TipoColaborador tipo);
+
+    @Query("SELECT COALESCE(SUM(c.salario), 0) FROM Colaborador c WHERE c.tipo = :tipo")
+    BigDecimal sumSalarioByTipo(@Param("tipo") TipoColaborador tipo);
 }
