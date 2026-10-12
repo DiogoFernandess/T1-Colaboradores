@@ -43,4 +43,11 @@ public class ColaboradorController {
 
         return ResponseEntity.ok(colaboradorService.cadastroColaborador(colaborador));
     }
+
+    @DeleteMapping("/{matricula}")
+    public ResponseEntity<Void> deleteColaboradorByMatricula(@PathVariable String matricula){
+        colaboradorService.deleteColaboradorByMatricula(matricula);
+        return ResponseEntity.ok().build();
+
+    }
 }
