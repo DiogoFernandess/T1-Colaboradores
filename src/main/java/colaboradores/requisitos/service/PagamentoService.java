@@ -1,5 +1,7 @@
 package colaboradores.requisitos.service;
 
+import colaboradores.requisitos.dto.ColaboradorPagamentoDto;
+import colaboradores.requisitos.dto.FolhaResumoDto;
 import colaboradores.requisitos.entity.*;
 import colaboradores.requisitos.exception.ConflictException;
 import colaboradores.requisitos.repository.ColaboradorRepository;
@@ -63,7 +65,7 @@ public class PagamentoService {
         return colaboradorRepository.findTipoColaboradorByMatricula(matricula);
     }
 
-    public List<ColaboradorPagamento> folha (){
+    public List<ColaboradorPagamentoDto> folha (){
 
         return colaboradorRepository.findAll()
                 .stream()
@@ -71,9 +73,9 @@ public class PagamentoService {
                 .collect(Collectors.toList());
     }
 
-    public FolhaResumo folhaResumo(){
+    public FolhaResumoDto folhaResumo(){
 
-        FolhaResumo resumo = new FolhaResumo();
+        FolhaResumoDto resumo = new FolhaResumoDto();
 
         resumo.setColaboradores(colaboradorRepository.count());
         resumo.setColaboradoresPadrao(colaboradorRepository.countByTipo(PADRAO));
@@ -99,7 +101,7 @@ public class PagamentoService {
         return resumo;
     }
 
-    public ColaboradorPagamento getFolhaByMatricula(String matricula){
+    public ColaboradorPagamentoDto getFolhaByMatricula(String matricula){
 
         Colaborador colaborador = colaboradorRepository.findByMatricula(matricula)
                 .orElseThrow(() -> new RuntimeException("Colaborador não encontrado com a matrícula: " + matricula));
@@ -107,7 +109,7 @@ public class PagamentoService {
         return montarFolhaPagamento(colaborador);
     }
 
-    private ColaboradorPagamento montarFolhaPagamento(Colaborador colaborador) {
+    private ColaboradorPagamentoDto montarFolhaPagamento(Colaborador colaborador) {
 
         BigDecimal salario = Objects.requireNonNullElse(colaborador.getSalario(), BigDecimal.ZERO);
 
@@ -115,7 +117,7 @@ public class PagamentoService {
 
         BigDecimal total = salario.add(adicional);
 
-        return ColaboradorPagamento.builder()
+        return ColaboradorPagamentoDto.builder()
                 .matricula(colaborador.getMatricula())
                 .nome(colaborador.getNome())
                 .tipoColaborador(colaborador.getTipo())
