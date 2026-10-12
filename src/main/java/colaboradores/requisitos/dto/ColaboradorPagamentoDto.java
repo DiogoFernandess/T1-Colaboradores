@@ -1,6 +1,6 @@
-package colaboradores.requisitos.entity;
+package colaboradores.requisitos.dto;
 
-import jakarta.persistence.Entity;
+import colaboradores.requisitos.entity.TipoColaborador;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @Data
-public class ColaboradorPagamento {
+public class ColaboradorPagamentoDto {
 
     private String matricula;
 

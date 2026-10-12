@@ -1,4 +1,4 @@
-package colaboradores.requisitos.entity;
+package colaboradores.requisitos.dto;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Data
 @Getter
 @Setter
-public class FolhaResumo {
+public class FolhaResumoDto {
 
     private long colaboradores;
 

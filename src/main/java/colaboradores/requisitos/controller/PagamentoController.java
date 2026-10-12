@@ -1,12 +1,11 @@
 package colaboradores.requisitos.controller;
 
-import colaboradores.requisitos.entity.ColaboradorPagamento;
+import colaboradores.requisitos.dto.ColaboradorPagamentoDto;
 import colaboradores.requisitos.entity.Comissao;
-import colaboradores.requisitos.entity.FolhaResumo;
+import colaboradores.requisitos.dto.FolhaResumoDto;
 import colaboradores.requisitos.entity.Producao;
 import colaboradores.requisitos.service.PagamentoService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.OAuthFlow;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,21 +27,21 @@ public class PagamentoController {
 
     @GetMapping("/folha")
     @Operation(summary = "Gera Folha de Pagamento", description = "Gera Folha de Pagamento Geral")
-    public ResponseEntity<List<ColaboradorPagamento>> getFolha (){
+    public ResponseEntity<List<ColaboradorPagamentoDto>> getFolha (){
 
         return ResponseEntity.ok(pagamentoService.folha());
     }
 
     @GetMapping("/folha/{matricula}")
     @Operation(summary = "Gera Folha de Pagamento de um Colaborador", description = "Gera Folha de Pagamento de um Colaborador com Todos os Dados")
-    public ResponseEntity<ColaboradorPagamento> getFolhaByMatricula(@PathVariable String matricula){
+    public ResponseEntity<ColaboradorPagamentoDto> getFolhaByMatricula(@PathVariable String matricula){
 
         return ResponseEntity.ok(pagamentoService.getFolhaByMatricula(matricula));
     }
 
     @GetMapping("/resumo")
     @Operation(summary = "Folha Resumida", description = "Gera Folha de Pagamento Resumida")
-    public ResponseEntity<FolhaResumo> getFolhaResumo(){
+    public ResponseEntity<FolhaResumoDto> getFolhaResumo(){
 
         return ResponseEntity.ok(pagamentoService.folhaResumo());
     }
