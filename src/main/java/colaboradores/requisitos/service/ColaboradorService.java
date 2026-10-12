@@ -63,4 +63,8 @@ public class ColaboradorService {
     public boolean verifyMatriculaExist(String matricula){
         return colaboradoresRepository.existsByMatricula(matricula);
     }
+
+    public void deleteColaboradorByMatricula(String matricula){
+        colaboradoresRepository.deleteByMatricula(matricula);
+    }
 }
