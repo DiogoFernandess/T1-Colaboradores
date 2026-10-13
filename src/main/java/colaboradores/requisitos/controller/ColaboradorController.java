@@ -50,4 +50,10 @@ public class ColaboradorController {
         return ResponseEntity.ok().build();
 
     }
+
+    @PutMapping
+    public ResponseEntity<Colaborador> atualizaDadosColaborador(Colaborador colaborador){
+
+        return ResponseEntity.ok(colaboradorService.atualizaDadosColaborador(colaborador));
+    }
 }
