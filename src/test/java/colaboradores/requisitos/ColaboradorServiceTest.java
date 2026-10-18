@@ -198,7 +198,7 @@ class ColaboradorServiceTest {
     @Test
     @Disabled("RF009 - alteração não implementada")
     @DisplayName("CT011 | RF009 | deve atualizar nome e salario quando colaborador existe")
-    void deve_atualizarNomeESalario_quando_colaboradorExiste() {
+    void deveAtualizarNomeESalario() {
         // Intencao (RF009): alterar o colaborador de matricula 1001 existente,
         // mudando o nome para "Ana Souza Lima" e o salario para 2500.00.
         // Bloqueado: ColaboradorService nao possui metodo de alteracao (RF009 incompleta em src/main),

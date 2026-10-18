@@ -83,7 +83,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT012 | RF003/RF006/RN008 | deve calcular comissao quando comissionado registra vendas e percentual")
-    void deve_calcularComissao_quando_comissionadoRegistraVendasEPercentual() {
+    void deveCalcularComissao() {
         Comissao comissao = new Comissao();
         comissao.setIdMatricula(MATRICULA_COMISSIONADO);
         comissao.setValorVendas(new BigDecimal("10000.00"));
@@ -105,7 +105,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT013 | RF004/RF006/RN008 | deve calcular total quando producao registra quantidade e valor por unidade")
-    void deve_calcularTotal_quando_producaoRegistraQuantidadeEValorPorUnidade() {
+    void deveCalcularTotalDeProducao() {
         Producao producao = new Producao();
         producao.setIdMatricula(MATRICULA_PRODUCAO);
         producao.setQuantidadeProduzida(100);
@@ -127,7 +127,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT014 | RF002/RF006/RF007 | deve retornar salario final igual a base quando colaborador e padrao")
-    void deve_retornarSalarioFinalIgualBase_quando_colaboradorEPadrao() {
+    void deveRetornarSalarioFinalIgualBaseQuandoColaboradorEPadrao() {
         when(colaboradorRepository.findByMatricula(MATRICULA_PADRAO))
                 .thenReturn(Optional.of(colaboradorPadrao()));
 
@@ -143,7 +143,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT015 | RF003/RF006/RF007 | deve somar comissao ao salario quando colaborador e comissionado")
-    void deve_somarComissaoAoSalario_quando_colaboradorEComissionado() {
+    void deveSomarComissaoAoSalarioQuandoColaboradorEComissionado() {
         when(colaboradorRepository.findByMatricula(MATRICULA_COMISSIONADO))
                 .thenReturn(Optional.of(colaboradorComissionado()));
         when(comissaoRepository.sumComissaoByMatricula(MATRICULA_COMISSIONADO))
@@ -158,7 +158,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT016 | RF004/RF006/RF007 | deve somar produtividade ao salario quando colaborador e de producao")
-    void deve_somarProdutividadeAoSalario_quando_colaboradorEDeProducao() {
+    void deveSomarProdutividadeAoSalarioQuandoColaboradorEDeProducao() {
         when(colaboradorRepository.findByMatricula(MATRICULA_PRODUCAO))
                 .thenReturn(Optional.of(colaboradorProducao()));
         when(producaoRepository.sumValorByColaboradorId(MATRICULA_PRODUCAO))
@@ -173,7 +173,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT017 | RF007 | deve lancar ResourceNotFoundException exatamente quando matricula nao existe")
-    void deve_lancarResourceNotFoundExceptionExatamente_quando_matriculaNaoExiste() {
+    void deveLancarExceptionQuandoMatriculaNaoExiste() {
         when(colaboradorRepository.findByMatricula("9999")).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> pagamentoService.getFolhaByMatricula("9999"))
@@ -182,7 +182,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT018 | RF007 | deve retornar folha completa quando existem colaboradores dos tres tipos")
-    void deve_retornarFolhaCompleta_quando_existemColaboradoresDosTresTipos() {
+    void deveRetornarFolhaCompleta() {
         when(colaboradorRepository.findAll()).thenReturn(List.of(
                 colaboradorPadrao(),
                 colaboradorComissionado(),
@@ -209,7 +209,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT019 | RF003 | deve lancar ConflictException quando comissao e registrada para colaborador padrao")
-    void deve_lancarConflictException_quando_comissaoERegistradaParaColaboradorPadrao() {
+    void deveLancarExceptionQuandoComissaoERegistradaParaColaboradorPadrao() {
         Comissao comissao = new Comissao();
         comissao.setIdMatricula(MATRICULA_PADRAO);
         comissao.setValorVendas(new BigDecimal("10000.00"));
@@ -226,7 +226,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT020 | RF004 | deve lancar ConflictException quando producao e registrada para comissionado")
-    void deve_lancarConflictException_quando_producaoERegistradaParaComissionado() {
+    void deveLancarExceptionQuandoProducaoERegistradaParaComissionado() {
         Producao producao = new Producao();
         producao.setIdMatricula(MATRICULA_COMISSIONADO);
         producao.setQuantidadeProduzida(100);
@@ -243,7 +243,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT021 | RN004 | deve lancar excecao quando vendas sao negativas")
-    void deve_lancarExcecao_quando_vendasSaoNegativas() {
+    void deveLancarExcecaoQuandoVendasSaoNegativas() {
         Comissao comissao = new Comissao();
         comissao.setIdMatricula(MATRICULA_COMISSIONADO);
         comissao.setValorVendas(new BigDecimal("-100.00"));
@@ -260,7 +260,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT022 | RN005 | deve lancar excecao quando percentual e negativo")
-    void deve_lancarExcecao_quando_percentualENegativo() {
+    void deveLancarExcecaoQuandoPercentualENegativo() {
         Comissao comissao = new Comissao();
         comissao.setIdMatricula(MATRICULA_COMISSIONADO);
         comissao.setValorVendas(new BigDecimal("10000.00"));
@@ -277,7 +277,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT023 | RN006 | deve lancar excecao quando quantidade produzida e negativa")
-    void deve_lancarExcecao_quando_quantidadeProduzidaENegativa() {
+    void deveLancarExcecaoQuandoQuantidadeProduzidaENegativa() {
         Producao producao = new Producao();
         producao.setIdMatricula(MATRICULA_PRODUCAO);
         producao.setQuantidadeProduzida(-1);
@@ -294,7 +294,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT024 | RN007 | deve lancar excecao quando valor por unidade e negativo")
-    void deve_lancarExcecao_quando_valorPorUnidadeENegativo() {
+    void deveLancarExcecaoQuandoValorPorUnidadeENegativo() {
         Producao producao = new Producao();
         producao.setIdMatricula(MATRICULA_PRODUCAO);
         producao.setQuantidadeProduzida(100);
@@ -311,7 +311,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT025 | RF008 | deve retornar resumo com totais por categoria quando folha tem colaboradores dos tres tipos")
-    void deve_retornarResumoComTotaisPorCategoria_quando_folhaTemColaboradoresDosTresTipos() {
+    void deveRetornarResumoComTotalPorCategoria() {
         when(colaboradorRepository.count()).thenReturn(3L);
         when(colaboradorRepository.countByTipo(TipoColaborador.PADRAO)).thenReturn(1);
         when(colaboradorRepository.countByTipo(TipoColaborador.COMISSIONADO)).thenReturn(1);
@@ -339,7 +339,7 @@ class PagamentoServiceTest {
 
     @Test
     @DisplayName("CT026 | RF008 | deve retornar resumo zerado sem lancar excecao quando nao ha colaboradores")
-    void deve_retornarResumoZeradoSemLancarExcecao_quando_naoHaColaboradores() {
+    void deveRetornarResumoZerado() {
         when(colaboradorRepository.count()).thenReturn(0L);
         when(colaboradorRepository.countByTipo(any(TipoColaborador.class))).thenReturn(0);
         when(colaboradorRepository.sumSalarioByTipo(any(TipoColaborador.class))).thenReturn(null);
