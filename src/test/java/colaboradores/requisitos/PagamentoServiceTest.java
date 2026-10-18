@@ -1,4 +1,4 @@
-package colaboradores.requisitos.service;
+package colaboradores.requisitos;
 
 import colaboradores.requisitos.dto.ColaboradorPagamentoDto;
 import colaboradores.requisitos.dto.FolhaResumoDto;
@@ -11,6 +11,8 @@ import colaboradores.requisitos.exception.ResourceNotFoundException;
 import colaboradores.requisitos.repository.ColaboradorRepository;
 import colaboradores.requisitos.repository.ComissaoRepository;
 import colaboradores.requisitos.repository.ProducaoRepository;
+import colaboradores.requisitos.service.ColaboradorService;
+import colaboradores.requisitos.service.PagamentoService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

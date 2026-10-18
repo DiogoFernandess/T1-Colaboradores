@@ -1,10 +1,11 @@
-package colaboradores.requisitos.service;
+package colaboradores.requisitos;
 
 import colaboradores.requisitos.entity.Colaborador;
 import colaboradores.requisitos.entity.TipoColaborador;
 import colaboradores.requisitos.exception.ConflictException;
 import colaboradores.requisitos.exception.ResourceNotFoundException;
 import colaboradores.requisitos.repository.ColaboradorRepository;
+import colaboradores.requisitos.service.ColaboradorService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
