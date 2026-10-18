@@ -62,7 +62,7 @@ class ColaboradorServiceTest {
 
     @Test
     @DisplayName("CT001 | RF001/RF002 | deve salvar colaborador quando matricula ainda nao existe")
-    void deve_salvarColaborador_quando_matriculaAindaNaoExiste() {
+    void deveSalvarColaborador() {
         Colaborador colaborador = colaboradorPadrao();
         when(colaboradorRepository.existsByMatricula(MATRICULA)).thenReturn(false);
         when(colaboradorRepository.save(colaborador)).thenReturn(colaborador);
@@ -79,7 +79,7 @@ class ColaboradorServiceTest {
 
     @Test
     @DisplayName("CT002 | RN001 | deve lancar ConflictException quando matricula ja existe")
-    void deve_lancarConflictException_quando_matriculaJaExiste() {
+    void deveLancarExceptionQuandoMatriculaJaExiste() {
         Colaborador colaborador = colaboradorPadrao();
         when(colaboradorRepository.existsByMatricula(MATRICULA)).thenReturn(true);
 
@@ -91,7 +91,7 @@ class ColaboradorServiceTest {
 
     @Test
     @DisplayName("CT003 | RN003 | deve aceitar cadastro quando salario base e zero")
-    void deve_aceitarCadastro_quando_salarioBaseEZero() {
+    void deveAceitarCadastroQuandoSalarioBaseEZero() {
         Colaborador colaborador = colaborador(MATRICULA, NOME, new BigDecimal("0.00"), TipoColaborador.PADRAO);
         when(colaboradorRepository.existsByMatricula(MATRICULA)).thenReturn(false);
         when(colaboradorRepository.save(colaborador)).thenReturn(colaborador);
@@ -106,7 +106,7 @@ class ColaboradorServiceTest {
     @NullAndEmptySource
     @ValueSource(strings = "   ")
     @DisplayName("CT004 | RN002 | deve lancar excecao quando nome esta em branco")
-    void deve_lancarExcecao_quando_nomeEstaEmBranco(String nome) {
+    void deveLancarExcecaoQuandoNomeEstaEmBranco(String nome) {
         Colaborador colaborador = colaborador(MATRICULA, nome, SALARIO, TipoColaborador.PADRAO);
         when(colaboradorRepository.existsByMatricula(MATRICULA)).thenReturn(false);
 
@@ -118,7 +118,7 @@ class ColaboradorServiceTest {
 
     @Test
     @DisplayName("CT005 | RN003 | deve lancar excecao quando salario base e negativo")
-    void deve_lancarExcecao_quando_salarioBaseENegativo() {
+    void deveLancarExcecaoQuandoSalarioBaseENegativo() {
         Colaborador colaborador = colaborador(MATRICULA, NOME, new BigDecimal("-1.00"), TipoColaborador.PADRAO);
         when(colaboradorRepository.existsByMatricula(MATRICULA)).thenReturn(false);
 
@@ -130,7 +130,7 @@ class ColaboradorServiceTest {
 
     @Test
     @DisplayName("CT006 | RF005 | deve retornar todos os colaboradores quando existem cadastrados")
-    void deve_retornarTodosOsColaboradores_quando_existemCadastrados() {
+    void deveRetornarTodosColaboradores() {
         List<Colaborador> colaboradores = List.of(
                 colaborador("1001", "Ana Souza", new BigDecimal("2000.00"), TipoColaborador.PADRAO),
                 colaborador("1002", "Bruno Lima", new BigDecimal("3000.00"), TipoColaborador.COMISSIONADO),
@@ -152,7 +152,7 @@ class ColaboradorServiceTest {
 
     @Test
     @DisplayName("CT007 | RF005/RF009 | deve retornar dados do colaborador quando matricula existe")
-    void deve_retornarDadosDoColaborador_quando_matriculaExiste() {
+    void deveRetornarDadosDoColaborador() {
         Colaborador colaborador = colaboradorPadrao();
         when(colaboradorRepository.findByMatricula(MATRICULA)).thenReturn(Optional.of(colaborador));
 
@@ -167,7 +167,7 @@ class ColaboradorServiceTest {
 
     @Test
     @DisplayName("CT008 | RF005/RF009 | deve lancar ResourceNotFoundException quando matricula nao existe")
-    void deve_lancarResourceNotFoundException_quando_matriculaNaoExiste() {
+    void deveLancarExceptionQuandoMatriculaNaoExistePedidoProcura() {
         when(colaboradorRepository.findByMatricula("9999")).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> colaboradorService.findColaboradorByMatricula("9999"))
@@ -176,7 +176,7 @@ class ColaboradorServiceTest {
 
     @Test
     @DisplayName("CT009 | RF009 | deve excluir colaborador quando matricula existe")
-    void deve_excluirColaborador_quando_matriculaExiste() {
+    void deveExcluirColaborador() {
         when(colaboradorRepository.existsByMatricula(MATRICULA)).thenReturn(true);
 
         colaboradorService.deleteColaboradorByMatricula(MATRICULA);
@@ -186,7 +186,7 @@ class ColaboradorServiceTest {
 
     @Test
     @DisplayName("CT010 | RF009 | deve lancar ResourceNotFoundException quando matricula nao existe e exclusao e solicitada")
-    void deve_lancarResourceNotFoundException_quando_matriculaNaoExisteEExclusaoESolicitada() {
+    void deveLancarExceptionQuandoMatriculaNaoExistePedidoExclusao() {
         when(colaboradorRepository.existsByMatricula("9999")).thenReturn(false);
 
         assertThatThrownBy(() -> colaboradorService.deleteColaboradorByMatricula("9999"))
