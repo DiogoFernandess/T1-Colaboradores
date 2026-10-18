@@ -38,3 +38,6 @@ out/
 
 docker-compose.yaml
 /relatorios-testes/
+
+# Relatorios locais
+relatorios-testes/
