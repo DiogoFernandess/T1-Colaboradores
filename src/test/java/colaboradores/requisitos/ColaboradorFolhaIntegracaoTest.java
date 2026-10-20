@@ -45,7 +45,7 @@ class ColaboradorFolhaIntegracaoTest {
 
     @Test
     @DisplayName("CT027 | RF001/RNF003 | deve cadastrar e consultar colaborador quando dados sao validos")
-    void deve_cadastrarEConsultarColaborador_quando_dadosSaoValidos() throws Exception {
+    void deveCadastrarEConsultarColaboradorQuandoDadosSaoValidos() throws Exception {
         String jsonCadastro = """
                 {
                     "matricula": "7001",
@@ -76,7 +76,7 @@ class ColaboradorFolhaIntegracaoTest {
 
     @Test
     @DisplayName("CT028 | RF003/RF006/RF007 | deve calcular folha do comissionado quando vendas e percentual registrados")
-    void deve_calcularFolhaDoComissionado_quando_vendasEPercentualRegistrados() throws Exception {
+    void deveCalcularFolhaDoComissionadoQuando_vendasEPercentualRegistrados() throws Exception {
         String jsonCadastro = """
                 {
                     "matricula": "7002",
