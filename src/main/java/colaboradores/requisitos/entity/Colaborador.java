@@ -2,6 +2,7 @@ package colaboradores.requisitos.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -16,6 +17,7 @@ public class Colaborador {
     private String matricula;
 
     @Column
+    @NotBlank
     private String nome;
 
     @Column
