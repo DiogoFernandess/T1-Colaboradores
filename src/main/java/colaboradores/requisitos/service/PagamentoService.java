@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -43,6 +44,12 @@ public class PagamentoService {
             throw new ConflictException("Colaborador não pertence a esta categoria");
         }
 
+        BigDecimal comissaoCalculada = comissao.getValorVendas()
+                .multiply(BigDecimal.valueOf(comissao.getPorcentagem()))
+                .divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP);
+
+        comissao.setComissao(comissaoCalculada);
+
         return comissaoRepository.save(comissao);
     }
 
@@ -54,6 +61,12 @@ public class PagamentoService {
 
                 throw new ConflictException("Colaborador não pertence a esta categoria");
         }
+
+        BigDecimal totalCalculado = producao.getValorUnidade()
+                .multiply(BigDecimal.valueOf(producao.getQuantidadeProduzida()))
+                .setScale(2, RoundingMode.HALF_UP);
+
+        producao.setTotal(totalCalculado);
 
         return producaoRepository.save(producao);
     }
