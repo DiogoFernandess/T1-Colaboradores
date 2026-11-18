@@ -4,6 +4,7 @@ import colaboradores.requisitos.dto.ColaboradorPagamentoDto;
 import colaboradores.requisitos.dto.FolhaResumoDto;
 import colaboradores.requisitos.entity.*;
 import colaboradores.requisitos.exception.ConflictException;
+import colaboradores.requisitos.exception.ResourceNotFoundException;
 import colaboradores.requisitos.repository.ColaboradorRepository;
 import colaboradores.requisitos.repository.ComissaoRepository;
 import colaboradores.requisitos.repository.ProducaoRepository;
@@ -117,7 +118,7 @@ public class PagamentoService {
     public ColaboradorPagamentoDto getFolhaByMatricula(String matricula){
 
         Colaborador colaborador = colaboradorRepository.findByMatricula(matricula)
-                .orElseThrow(() -> new RuntimeException("Colaborador não encontrado com a matrícula: " + matricula));
+                .orElseThrow(() -> new ResourceNotFoundException("Colaborador não encontrado com a matrícula: " + matricula));
 
         return montarFolhaPagamento(colaborador);
     }

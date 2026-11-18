@@ -196,12 +196,25 @@ class ColaboradorServiceTest {
     }
 
     @Test
-    @Disabled("RF009 - alteração não implementada")
-    @DisplayName("CT011 | RF009 | deve atualizar nome e salario quando colaborador existe")
-    void deveAtualizarNomeESalario() {
-        // Intencao (RF009): alterar o colaborador de matricula 1001 existente,
-        // mudando o nome para "Ana Souza Lima" e o salario para 2500.00.
-        // Bloqueado: ColaboradorService nao possui metodo de alteracao (RF009 incompleta em src/main),
-        // entao o teste fica desabilitado ate que a regra seja implementada.
+    @DisplayName("CT011 | RF009 | deve alterar nome e salario quando colaborador existe")
+    void deveAlterarColaboradorQuandoMatriculaExiste() {
+        Colaborador existente = new Colaborador();
+        existente.setMatricula("1001");
+        existente.setNome("Ana Souza");
+        existente.setSalario(new BigDecimal("2000.00"));
+        existente.setTipo(TipoColaborador.PADRAO);
+
+        Colaborador alteracao = new Colaborador();
+        alteracao.setNome("Ana Souza Lima");
+        alteracao.setSalario(new BigDecimal("2500.00"));
+
+        when(colaboradorRepository.findByMatricula("1001")).thenReturn(Optional.of(existente));
+        when(colaboradorRepository.save(any(Colaborador.class))).thenAnswer(i -> i.getArgument(0));
+
+        Colaborador resultado = colaboradorService.alterarColaborador("1001", alteracao);
+
+        assertThat(resultado.getNome()).isEqualTo("Ana Souza Lima");
+        assertThat(resultado.getSalario()).isEqualByComparingTo("2500.00");
+        verify(colaboradorRepository, times(1)).save(any(Colaborador.class));
     }
 }

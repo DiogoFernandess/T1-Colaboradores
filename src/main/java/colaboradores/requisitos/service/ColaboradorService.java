@@ -67,4 +67,11 @@ public class ColaboradorService {
     public void deleteColaboradorByMatricula(String matricula){
         colaboradoresRepository.deleteByMatricula(matricula);
     }
+
+    public Colaborador alterarColaborador(String matricula, Colaborador dados){
+        Colaborador existe = findColaboradorByMatricula(matricula);
+        existe.setNome(dados.getNome());
+        existe.setSalario(dados.getSalario());
+        return colaboradoresRepository.save(existe);
+    }
 }
