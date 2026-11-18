@@ -65,6 +65,9 @@ public class ColaboradorService {
     }
 
     public void deleteColaboradorByMatricula(String matricula){
+        if (!verifyMatriculaExist(matricula)) {
+            throw new ResourceNotFoundException("Matricula not found " + matricula);
+        }
         colaboradoresRepository.deleteByMatricula(matricula);
     }
 
@@ -75,3 +78,4 @@ public class ColaboradorService {
         return colaboradoresRepository.save(existe);
     }
 }
+
