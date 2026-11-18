@@ -50,4 +50,10 @@ public class ColaboradorController {
         return ResponseEntity.ok().build();
 
     }
+
+    @PutMapping("/{matricula}")
+    @Operation(summary = "Altera Colaborador", description = "Altera nome e salário de um colaborador existente")
+    public ResponseEntity<Colaborador> alterarColaborador(@PathVariable String matricula, @RequestBody Colaborador colaborador){
+        return ResponseEntity.ok(colaboradorService.alterarColaborador(matricula, colaborador));
+    }
 }
