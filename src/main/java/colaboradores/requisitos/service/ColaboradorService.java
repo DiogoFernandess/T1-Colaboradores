@@ -2,6 +2,7 @@ package colaboradores.requisitos.service;
 
 import colaboradores.requisitos.entity.Colaborador;
 import colaboradores.requisitos.exception.ConflictException;
+import colaboradores.requisitos.exception.RegraNegocioException;
 import colaboradores.requisitos.exception.ResourceNotFoundException;
 import colaboradores.requisitos.repository.ColaboradorRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,10 @@ public class ColaboradorService {
     public Colaborador cadastroColaborador(Colaborador colaborador){
 
         matriculaExist(colaborador.getMatricula());
+
+        if (colaborador.getNome() == null || colaborador.getNome().isBlank()) {
+            throw new RegraNegocioException("Nome do colaborador é obrigatório");
+        }
 
         return colaboradoresRepository.save(colaborador);
     }
