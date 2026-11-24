@@ -50,6 +50,10 @@ public class PagamentoService {
             throw new ValorInvalidoException("Valor da Venda não pode ser menor que zero");
         }
 
+        if (comissao.getPorcentagem() <0){
+            throw new ValorInvalidoException("Porcentagem não pode ser menor que zero");
+        }
+
         BigDecimal comissaoCalculada = comissao.getValorVendas()
                 .multiply(BigDecimal.valueOf(comissao.getPorcentagem()))
                 .divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP);
