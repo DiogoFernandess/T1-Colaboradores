@@ -5,6 +5,7 @@ import colaboradores.requisitos.dto.FolhaResumoDto;
 import colaboradores.requisitos.entity.*;
 import colaboradores.requisitos.exception.ConflictException;
 import colaboradores.requisitos.exception.ResourceNotFoundException;
+import colaboradores.requisitos.exception.ValorInvalidoException;
 import colaboradores.requisitos.repository.ColaboradorRepository;
 import colaboradores.requisitos.repository.ComissaoRepository;
 import colaboradores.requisitos.repository.ProducaoRepository;
@@ -61,6 +62,14 @@ public class PagamentoService {
         if (tipo != PRODUCAO) {
 
                 throw new ConflictException("Colaborador não pertence a esta categoria");
+        }
+
+        if (producao.getValorUnidade() == null || producao.getValorUnidade().compareTo(BigDecimal.ZERO) <0){
+            throw new ValorInvalidoException("Valor por Unidade não pode ser menor que zero");
+        }
+
+        if (producao.getQuantidadeProduzida() < 0){
+            throw new ValorInvalidoException("Valor por Unidade não pode ser menor que zero");
         }
 
         BigDecimal totalCalculado = producao.getValorUnidade()

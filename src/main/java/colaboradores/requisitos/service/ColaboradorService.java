@@ -4,7 +4,7 @@ import colaboradores.requisitos.entity.Colaborador;
 import colaboradores.requisitos.exception.ConflictException;
 import colaboradores.requisitos.exception.RegraNegocioException;
 import colaboradores.requisitos.exception.ResourceNotFoundException;
-import colaboradores.requisitos.exception.SalarioInvalidoException;
+import colaboradores.requisitos.exception.ValorInvalidoException;
 import colaboradores.requisitos.repository.ColaboradorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class ColaboradorService {
         }
 
         if (colaborador.getSalario() == null || colaborador.getSalario().compareTo(BigDecimal.ZERO) <0){
-            throw new SalarioInvalidoException("Salário não pode ser menor que zero");
+            throw new ValorInvalidoException("Salário não pode ser menor que zero");
         }
 
         return colaboradoresRepository.save(colaborador);
