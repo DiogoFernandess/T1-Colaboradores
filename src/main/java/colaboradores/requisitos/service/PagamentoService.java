@@ -46,6 +46,10 @@ public class PagamentoService {
             throw new ConflictException("Colaborador não pertence a esta categoria");
         }
 
+        if (comissao.getValorVendas() == null || comissao.getValorVendas().compareTo(BigDecimal.ZERO) <0){
+            throw new ValorInvalidoException("Valor da Venda não pode ser menor que zero");
+        }
+
         BigDecimal comissaoCalculada = comissao.getValorVendas()
                 .multiply(BigDecimal.valueOf(comissao.getPorcentagem()))
                 .divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP);
