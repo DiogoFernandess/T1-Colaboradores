@@ -4,11 +4,13 @@ import colaboradores.requisitos.entity.Colaborador;
 import colaboradores.requisitos.exception.ConflictException;
 import colaboradores.requisitos.exception.RegraNegocioException;
 import colaboradores.requisitos.exception.ResourceNotFoundException;
+import colaboradores.requisitos.exception.SalarioInvalidoException;
 import colaboradores.requisitos.repository.ColaboradorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -37,6 +39,10 @@ public class ColaboradorService {
 
         if (colaborador.getNome() == null || colaborador.getNome().isBlank()) {
             throw new RegraNegocioException("Nome do colaborador é obrigatório");
+        }
+
+        if (colaborador.getSalario() == null || colaborador.getSalario().compareTo(BigDecimal.ZERO) <0){
+            throw new SalarioInvalidoException("Salário não pode ser menor que zero");
         }
 
         return colaboradoresRepository.save(colaborador);
